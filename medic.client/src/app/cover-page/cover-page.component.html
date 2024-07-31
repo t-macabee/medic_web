@@ -1,0 +1,21 @@
+<div class="cover-container mt-3">
+  <div class="centered-content">
+    <h1 class="mb-4">MedicLab</h1><br><br>
+    <form #loginForm="ngForm" class="form-center" (ngSubmit)="login()" autocomplete="off">
+      <input
+        name="username"
+        [(ngModel)]="model.username"
+        class="form-control mb-2"
+        type="text"
+        placeholder="Username">
+      <input
+        name="password"
+        [(ngModel)]="model.password"
+        class="form-control mb-2"
+        type="password"
+        placeholder="Password">
+      <button class="btn btn-primary" type="submit">Login</button>
+    </form>
+  </div>
+</div>
+
