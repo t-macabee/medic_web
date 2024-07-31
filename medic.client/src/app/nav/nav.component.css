@@ -1,0 +1,47 @@
+.navbar-brand {
+  font-size: xx-large;
+  color: darkgray;
+  font-family: "Lucida Calligraphy", cursive;
+  text-decoration: none;
+  position: relative;
+  font-weight: bold;
+  display: inline-block;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+}
+
+.navbar-brand::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 4px;
+  background-color: darkgray;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.navbar-brand:hover {
+  color: white;
+}
+
+.navbar-brand:hover::after {
+  width: 100%;
+}
+
+.navbar-brand:active {
+  color: white;
+}
+
+.navbar-brand:active::after {
+  background-color: white;
+}
+
+.dropdown-toggle, .dropdown-item {
+  color: darkgray;
+  cursor: pointer;
+}
+
+.dropdown-toggle:hover, .dropdown-item:hover {
+  color: white;
+}

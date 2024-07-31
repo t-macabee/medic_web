@@ -1,0 +1,13 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/home">MedicLab</a>
+    <div class="dropdown" dropdown *ngIf="accountService.currentUser$ | async">
+      <a class="dropdown-toggle text-decoration-none" dropdownToggle>Welcome user</a>
+      <div class="dropdown-menu" *dropdownMenu>
+        <a class="dropdown-item">Edit profile</a>
+        <a class="dropdown-item" (click)="logout()">Logout</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
