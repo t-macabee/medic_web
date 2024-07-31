@@ -1,33 +1,28 @@
 import {Component, OnInit} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import {HttpClient} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
-import {CoverPageComponent} from "./cover-page/cover-page.component";
-import {AccountService} from "./services/account.service";
-import {User} from "./models/user";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, CoverPageComponent],
+  imports: [RouterOutlet, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
+  title: string = 'MedicLab';
+  users: any;
 
-  constructor(private accountService: AccountService) { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.setCurrentUser();
+    this.http.get('https://localhost:44355/users').subscribe(
+      {
+        next: response => this.users = response,
+        error: error => console.log(error),
+        complete: () => console.log("Request complete!")
+      })
   }
 
-  setCurrentUser() {
-    if(typeof window !== 'undefined' && localStorage) {
-      const userString = localStorage.getItem('user');
-      if (!userString) return;
-      const user: User = JSON.parse(userString);
-      this.accountService.setCurrentUser(user);
-    } else {
-      console.error('localStorage is not available');
-    }
-  }
 }
