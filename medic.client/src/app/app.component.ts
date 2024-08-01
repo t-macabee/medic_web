@@ -14,6 +14,7 @@ import {LoginScreenComponent} from "./login-screen/login-screen.component";
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
+  title = 'medic.client';
 
   constructor(private accountService: AccountService) { }
 

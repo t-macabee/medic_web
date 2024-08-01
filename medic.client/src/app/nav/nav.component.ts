@@ -3,6 +3,8 @@ import {AsyncPipe, NgIf} from "@angular/common";
 import {BsDropdownModule} from "ngx-bootstrap/dropdown";
 import {AccountService} from "../services/account.service";
 import {Router, RouterLink} from "@angular/router";
+import {Observable} from "rxjs";
+import {User} from "../models/user";
 
 @Component({
   selector: 'app-nav',
@@ -17,12 +19,14 @@ import {Router, RouterLink} from "@angular/router";
   styleUrl: './nav.component.css'
 })
 export class NavComponent {
+  currentUser$: Observable<User | null>;
 
-  constructor(public accountService: AccountService, private router: Router) {
+  constructor(private accountService: AccountService, private router: Router) {
+    this.currentUser$ = this.accountService.currentUser$;
   }
 
   logout() {
     this.accountService.logout();
-    this.router.navigateByUrl('/login').then(success => {}).catch(error => {});
+    this.router.navigateByUrl('/').then(_ => {}).catch(_ => {});
   }
 }

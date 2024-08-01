@@ -27,10 +27,9 @@ export class LoginScreenComponent implements OnInit {
 
   login() {
     this.accountService.login(this.model).subscribe({
-      next: response => {
-        this.router.navigateByUrl('/home').then(success => {}).catch(error => {});
-      },
-      error: error => console.log(error)
-    })
+      next: _ => {
+        this.router.navigateByUrl('/home');
+      }
+    });
   }
 }
