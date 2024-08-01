@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
-import {User} from "../models/user";
+import {MembersService} from "../services/members.service";
+import {Member} from "../models/member";
+import {MemberCardComponent} from "../members/member-card/member-card.component";
 
 @Component({
   selector: 'app-home-screen',
@@ -9,28 +10,25 @@ import {User} from "../models/user";
   imports: [
     NgForOf,
     AsyncPipe,
-    NgIf
+    NgIf,
+    MemberCardComponent
   ],
   templateUrl: './home-screen.component.html',
   styleUrl: './home-screen.component.css'
 })
 export class HomeScreenComponent implements OnInit{
-  users: any;
+  members: Member[] = [];
 
-  constructor(private http: HttpClient) { }
+  constructor(private membersService: MembersService) { }
 
   ngOnInit() {
-    /*this.getUsers();*/
+    this.loadMembers();
   }
 
-  getUsers() {
-    this.http.get<User[]>('https://localhost:44355/api/Users/get-all').subscribe({
-      next: (response: any) => {
-        this.users = response;
-      },
-      error: (error: any) => console.log(error),
-      complete: () => console.log("Request complete!")
-    });
+  loadMembers() {
+    this.membersService.getMembers().subscribe({
+      next: members => this.members = members
+    })
   }
 
 }

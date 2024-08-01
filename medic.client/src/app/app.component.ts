@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import {CommonModule} from "@angular/common";
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {Router, RouterOutlet} from '@angular/router';
+import {CommonModule, isPlatformBrowser} from "@angular/common";
 import {AccountService} from "./services/account.service";
 import {User} from "./models/user";
 import {NavComponent} from "./nav/nav.component";
@@ -15,19 +15,36 @@ import {LoginScreenComponent} from "./login-screen/login-screen.component";
 })
 export class AppComponent implements OnInit {
   title = 'medic.client';
+  loading = true;
 
-  constructor(private accountService: AccountService) { }
+  constructor(private accountService: AccountService, @Inject(PLATFORM_ID) private platformId: Object, private router: Router) { }
 
   ngOnInit() {
     this.setCurrentUser();
   }
 
   setCurrentUser() {
-    if (typeof window !== 'undefined' && window.localStorage) {
+    if (isPlatformBrowser(this.platformId)) {
       const userString = localStorage.getItem('user');
-      if (!userString) return;
+      if (!userString) {
+        this.loading = false;
+        this.router.navigate(['/login']);
+        return;
+      }
       const user: User = JSON.parse(userString);
       this.accountService.setCurrentUser(user);
+      this.checkRedirect();
     }
+  }
+
+  checkRedirect() {
+    this.accountService.currentUser$.subscribe(user => {
+      if (user) {
+        this.router.navigate(['/home']);
+      } else {
+        this.router.navigate(['/login']);
+      }
+      this.loading = false;
+    });
   }
 }

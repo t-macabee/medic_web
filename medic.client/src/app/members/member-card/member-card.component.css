@@ -1,0 +1,45 @@
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 2rem;
+}
+
+.card {
+  margin-bottom: 0;
+  color: darkgray;
+  background-color: #212529;
+  transition: background-color 0.1s ease, color 0.1s ease;
+  border-radius: 8px;
+}
+
+.card:hover {
+  background-color: #212529;
+  border-color: whitesmoke;
+  cursor: pointer;
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.card-title {
+  text-align: center;
+  margin: 0.25rem;
+}
+
+.label {
+  display: block;
+  margin: 0.5rem 0;
+  color: darkgray;
+  transition: font-weight 0.1s ease;
+}
+
+.card:hover .label {
+  font-weight: bold;
+  color: whitesmoke;
+}
+
+.card {
+  width: 100%;
+  box-sizing: border-box;
+}

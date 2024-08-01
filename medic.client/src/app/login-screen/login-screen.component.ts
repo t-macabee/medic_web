@@ -1,9 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {Observable, of} from "rxjs";
-import {User} from "../models/user";
+import {Component} from '@angular/core';
 import {AccountService} from "../services/account.service";
 import {Router} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+
 
 @Component({
   selector: 'app-login-screen',
@@ -15,20 +14,17 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
   templateUrl: './login-screen.component.html',
   styleUrl: './login-screen.component.css'
 })
-export class LoginScreenComponent implements OnInit {
+export class LoginScreenComponent {
   model: any = {};
-  currentUser$: Observable<User | null> = of(null);
 
   constructor(private accountService: AccountService, private router: Router) {
-  }
-
-  ngOnInit() {
   }
 
   login() {
     this.accountService.login(this.model).subscribe({
       next: _ => {
         this.router.navigateByUrl('/home');
+        this.model = {};
       }
     });
   }

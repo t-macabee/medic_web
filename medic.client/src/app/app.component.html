@@ -1,5 +1,11 @@
 <app-nav></app-nav>
 <div class="container" style="margin-top: 100px">
-  <router-outlet></router-outlet>
+  <div *ngIf="loading" class="loading-spinner">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <div *ngIf="!loading">
+    <router-outlet></router-outlet>
+  </div>
 </div>
-

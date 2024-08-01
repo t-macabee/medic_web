@@ -1,38 +1,45 @@
-import { Injectable } from '@angular/core';
+import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, map} from "rxjs";
+import {BehaviorSubject, map, Observable} from "rxjs";
 import {User} from "../models/user";
-import {ToastrService} from "ngx-toastr";
+import {environment} from "../../environments/environment.development";
+import {isPlatformBrowser} from "@angular/common";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
-  baseUrl = "https://localhost:44355/api/";
+  baseUrl = environment.apiUrl;
   private currentUserSource = new BehaviorSubject<User | null>(null);
   currentUser$ = this.currentUserSource.asObservable();
 
-  constructor(private http: HttpClient, private toastr: ToastrService) { }
+  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {}
 
-  login(model: any) {
+  login(model: any): Observable<void> {
     return this.http.post<User>(this.baseUrl + 'Account/login', model).pipe(
-      map((response: User)  => {
+      map((response: User) => {
         const user = response;
-        if(user) {
-          localStorage.setItem('user', JSON.stringify(user));
+        if (user) {
+          if (isPlatformBrowser(this.platformId)) {
+            localStorage.setItem('user', JSON.stringify(user));
+          }
           this.currentUserSource.next(user);
-          this.toastr.clear();
         }
       })
     );
   }
 
-  setCurrentUser(user: User) {
+  setCurrentUser(user: User): void {
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('user', JSON.stringify(user));
+    }
     this.currentUserSource.next(user);
   }
 
-  logout() {
-    localStorage.removeItem('user');
+  logout(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('user');
+    }
     this.currentUserSource.next(null);
   }
 }
