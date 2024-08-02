@@ -1,7 +1,7 @@
 <div class="cards-wrapper">
   <ng-container *ngFor="let member of members">
     <div class="card-container">
-      <div class="info-container" (click)="memberDetails(member)">
+      <div class="info-container" (click)="memberDetails(member)" [class.disabled]="isDialogOpen" [style.pointer-events]="isDialogOpen ? 'none' : 'auto'">
         <div class="content-wrapper" >
           <div class="label-group">
             <div class="label">ID:</div>

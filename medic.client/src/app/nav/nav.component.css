@@ -60,3 +60,7 @@
   background-color: #343a40;
 }
 
+.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

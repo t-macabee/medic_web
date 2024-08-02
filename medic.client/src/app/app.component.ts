@@ -17,10 +17,13 @@ import {NgxSpinnerComponent} from "ngx-spinner";
 export class AppComponent implements OnInit {
   title = 'medic.client';
 
-  constructor(private accountService: AccountService, @Inject(PLATFORM_ID) private platformId: Object, private router: Router) { }
+  constructor(private accountService: AccountService,
+              @Inject(PLATFORM_ID) private platformId: Object,
+              private router: Router) { }
 
   ngOnInit() {
     this.setCurrentUser();
+
   }
 
   setCurrentUser() {

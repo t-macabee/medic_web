@@ -1,0 +1,45 @@
+.form-container {
+  max-width: 600px;
+  margin: auto;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  flex: 0 0 150px;
+  text-align: left;
+  padding-right: 10px;
+  color: darkgray;
+}
+
+.form-control {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 40px;
+}
+
+.btn {
+  margin-left: 10px;
+  background-color: #212529;
+  border: 1px solid darkgray;
+  color: darkgray;
+  transition: background-color 0.3s ease-in-out;
+  font-weight: bold;
+  width: 80px;
+}
+
+.btn:hover {
+  background-color: #343a40;
+}
+

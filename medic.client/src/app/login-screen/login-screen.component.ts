@@ -18,14 +18,20 @@ import {BusyService} from "../services/busy.service";
 export class LoginScreenComponent {
   model: any = {};
 
-  constructor(private accountService: AccountService, private router: Router, spinner: BusyService) {
+  constructor(private accountService: AccountService, private router: Router, private busyService: BusyService) {
   }
 
   login() {
+    this.busyService.busy(); // Show spinner
     this.accountService.login(this.model).subscribe({
       next: _ => {
-        this.router.navigateByUrl('/home');
+        this.router.navigateByUrl('/home').then(() => {
+          this.busyService.idle(); // Hide spinner after navigation
+        });
         this.model = {};
+      },
+      error: _ => {
+        this.busyService.idle(); // Hide spinner on error
       }
     });
   }

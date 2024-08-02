@@ -1,26 +1,36 @@
-<!--
-<form [formGroup]='registerForm' (ngSubmit)="create()" autocomplete="off">
-  <h2 class="text text-center">Sign up</h2>
-  <hr>
-
-  <br>
-  <app-text-input [formControl]='registerForm.controls["username"]' [label]='"Username"'></app-text-input>
-  <br>
-  <app-text-input [formControl]='registerForm.controls["knownAs"]' [label]='"Known as"'></app-text-input>
-  <br>
-  <app-date-input [formControl]='registerForm.controls["dateOfBirth"]' [label]='"Date of birth"' [maxDate]="maxDate"></app-date-input>
-  <br>
-  <app-text-input [formControl]='registerForm.controls["country"]' [label]='"Country"'></app-text-input>
-  <br>
-  <app-text-input [formControl]='registerForm.controls["password"]' [label]='"Password"' [type]='"password"'></app-text-input>
-  <br>
-  <app-text-input [formControl]='registerForm.controls["confirmPassword"]' [label]='"Confirm password"' [type]='"password"'></app-text-input>
-  <br>
-
-  <div class="form-group text-center mb-5">
-    <button [disabled]="!registerForm.valid" class="btn me-2" type="submit">Register</button>
-
-  </div>
-</form>
--->
-<button class="btn mr-2" (click)="close()" type="button">Cancel</button>
+<div class="form-container">
+  <form [formGroup]="createForm" (ngSubmit)="save()">
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input id="name" formControlName="name" type="text" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="dateOfBirth">Date of birth:</label>
+      <input id="dateOfBirth" formControlName="dateOfBirth" type="date" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input id="username" formControlName="username" type="text" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input id="password" formControlName="password" type="password" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="confirmPassword">Confirm password:</label>
+      <input id="confirmPassword" formControlName="confirmPassword" type="password" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="orders">Orders:</label>
+      <input id="orders" formControlName="orders" type="text" class="form-control" readonly>
+    </div>
+    <div class="form-group">
+      <label for="imageUrl">Image URL:</label>
+      <input id="imageUrl" formControlName="imageUrl" type="url" class="form-control">
+    </div>
+    <div class="button-group">
+      <button type="submit" class="btn">Save</button>
+      <button type="button" class="btn" (click)="close()">Close</button>
+    </div>
+  </form>
+</div>

@@ -24,8 +24,11 @@ import {CreateMemberComponent} from "../dialogs/create-member/create-member.comp
 })
 export class NavComponent {
   currentUser$: Observable<User | null>;
+  isDialogOpen = false;
 
-  constructor(private accountService: AccountService, private router: Router, private dialog: MatDialog) {
+  constructor(private accountService: AccountService,
+              private router: Router,
+              private dialog: MatDialog) {
     this.currentUser$ = this.accountService.currentUser$;
   }
 
@@ -35,11 +38,18 @@ export class NavComponent {
   }
 
   addMember() {
+    if (this.isDialogOpen) return;
+
+    this.isDialogOpen = true;
     const dialog = this.dialog.open(CreateMemberComponent, {
       height: '600px',
-      width: '500px',
-      data : {},
+      width: '600px',
+      data: {},
       disableClose: true
-    })
+    });
+
+    dialog.afterClosed().subscribe(result => {
+      this.isDialogOpen = false;
+    });
   }
 }

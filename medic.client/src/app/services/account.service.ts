@@ -4,6 +4,7 @@ import {BehaviorSubject, map, Observable} from "rxjs";
 import {User} from "../models/user";
 import {environment} from "../../environments/environment.development";
 import {isPlatformBrowser} from "@angular/common";
+import {Member} from "../models/member";
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,18 @@ export class AccountService {
         }
       })
     );
+  }
+
+  register(model: any): Observable<Member> {
+    return this.http.post<Member>(this.baseUrl + 'Account/register', model).pipe(
+      map((response: Member) => {
+        return response;
+      })
+    );
+  }
+
+  getOrder(): Observable<number> {
+    return this.http.get<number>(this.baseUrl + 'Account/order-number');
   }
 
   setCurrentUser(user: User): void {

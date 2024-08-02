@@ -3,40 +3,30 @@
     <img [src]="member.imageUrl" [alt]="member.name" class="member-image">
   </div>
   <div class="right-section">
-    <form [formGroup]="editForm" (ngSubmit)="save()">
       <div class="details-container">
-        <div class="column">
           <div class="label-group">
             <div class="label">ID:</div>
-            <div class="label">Date of Birth:</div>
-            <div class="label">Last Login:</div>
+            <div class="label">Name:</div>
+            <div class="label">Date of birth:</div>
             <div class="label">Orders:</div>
+            <div class="label">Username:</div>
+            <div class="label">Status:</div>
+            <div class="label">Last login:</div>
           </div>
           <div class="value-group">
             <div class="value"><strong>{{ member.id }}</strong></div>
+            <div class="value"><strong>{{ member.name }}</strong></div>
             <div class="value"><strong>{{ member.dateOfBirth }}</strong></div>
-            <div class="value"><strong>{{ member.lastLogin }}</strong></div>
             <div class="value"><strong>{{ member.orders }}</strong></div>
+            <div class="value"><strong>{{ member.username }}</strong></div>
+            <div class="value"><strong>{{ member.status }}</strong></div>
+            <div class="value"><strong>{{ member.lastLogin }}</strong></div>
           </div>
-        </div>
-        <div class="column">
-          <div class="label-group">
-            <div class="label">Name:</div>
-            <div class="label">Username:</div>
-            <div class="label">Status:</div>
-          </div>
-          <div class="value-group">
-            <input formControlName="name" class="value">
-            <input formControlName="username" class="value">
-            <div class="value"><strong>{{ editForm.get('status')?.value }}</strong></div>
-          </div>
-        </div>
       </div>
       <div class="button-container">
-        <button type="button" class="btn" (click)="toggle()">Toggle status</button>
-        <button type="submit" class="btn">Save</button>
+        <button type="button" (click)="editDetail()" class="btn">Edit</button>
         <button type="button" (click)="close()" class="btn">Close</button>
       </div>
-    </form>
   </div>
 </div>
+

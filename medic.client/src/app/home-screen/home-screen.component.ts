@@ -17,47 +17,49 @@ import {SharedService} from "../services/shared.service";
   templateUrl: './home-screen.component.html',
   styleUrl: './home-screen.component.css'
 })
-export class HomeScreenComponent implements OnInit{
+export class HomeScreenComponent implements OnInit {
   members: Member[] = [];
-  selectedMember: Member
+  selectedMember: Member;
+  isDialogOpen = false;
 
-  constructor(private membersService: MembersService, private sharedService: SharedService ,private dialog: MatDialog) { }
+  constructor(
+    private membersService: MembersService,
+    private sharedService: SharedService,
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit() {
     this.loadMembers();
-    this.loadSharedService();
+    this.sharedService.currentMembers$.subscribe(members => {
+      this.members = members;
+    });
   }
 
   loadMembers() {
     this.membersService.getMembers().subscribe({
-      next: members => this.members = members
-    })
-  }
-
-  loadSharedService(){
-    this.sharedService.currentMember.subscribe(member => {
-      if (member) {
-        const index = this.members.findIndex(m => m.id === member.id);
-        if (index !== -1) {
-          this.members[index] = member;
-        }
+      next: members => {
+        this.members = members;
+        this.sharedService.updateMembers(members);
       }
     });
   }
 
   memberDetails(member: Member) {
+    if (this.isDialogOpen) return;
+    this.isDialogOpen = true;
     this.selectedMember = member;
 
     const dialogRef = this.dialog.open(MemberDetailsComponent, {
       data: { member: this.selectedMember },
       maxHeight: '90vh',
       maxWidth: '90vw',
-      height: '400px',
-      width: '900px',
+      height: '450px',
+      width: '800px',
       disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.isDialogOpen = false;
       if (result) {
         this.loadMembers();
       }
