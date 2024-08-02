@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {AccountService} from "../services/account.service";
 import {Router} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {BusyService} from "../services/busy.service";
 
 
 @Component({
@@ -17,7 +18,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 export class LoginScreenComponent {
   model: any = {};
 
-  constructor(private accountService: AccountService, private router: Router) {
+  constructor(private accountService: AccountService, private router: Router, spinner: BusyService) {
   }
 
   login() {

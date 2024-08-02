@@ -28,15 +28,15 @@
           <div class="value-group">
             <input formControlName="name" class="value">
             <input formControlName="username" class="value">
-            <div class="value"><strong>{{ member.status }}</strong></div>
+            <div class="value"><strong>{{ editForm.get('status')?.value }}</strong></div>
           </div>
         </div>
       </div>
+      <div class="button-container">
+        <button type="button" class="btn" (click)="toggle()">Toggle status</button>
+        <button type="submit" class="btn">Save</button>
+        <button type="button" (click)="close()" class="btn">Close</button>
+      </div>
     </form>
   </div>
-</div>
-<div class="button-container">
-  <button type="button" class="btn">Toggle status</button>
-  <button type="submit" class="btn">Save</button>
-  <button type="button" (click)="close()" class="btn">Close</button>
 </div>

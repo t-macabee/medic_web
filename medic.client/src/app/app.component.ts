@@ -5,17 +5,17 @@ import {AccountService} from "./services/account.service";
 import {User} from "./models/user";
 import {NavComponent} from "./nav/nav.component";
 import {LoginScreenComponent} from "./login-screen/login-screen.component";
+import {NgxSpinnerComponent} from "ngx-spinner";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, LoginScreenComponent, NavComponent],
+  imports: [RouterOutlet, CommonModule, LoginScreenComponent, NavComponent, NgxSpinnerComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
   title = 'medic.client';
-  loading = true;
 
   constructor(private accountService: AccountService, @Inject(PLATFORM_ID) private platformId: Object, private router: Router) { }
 
@@ -27,7 +27,6 @@ export class AppComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       const userString = localStorage.getItem('user');
       if (!userString) {
-        this.loading = false;
         this.router.navigate(['/login']);
         return;
       }
@@ -44,7 +43,6 @@ export class AppComponent implements OnInit {
       } else {
         this.router.navigate(['/login']);
       }
-      this.loading = false;
     });
   }
 }

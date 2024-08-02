@@ -3,7 +3,6 @@ import {environment} from "../../environments/environment.development";
 import {HttpClient} from "@angular/common/http";
 import {Member} from "../models/member";
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -19,7 +18,7 @@ export class MembersService {
     return this.http.get<Member[]>(this.baseUrl + 'Users/get-all');
   }
 
-  getMember(id: number) {
-    return this.http.get<Member>(this.baseUrl + 'Users/details/' + id);
+  editMember(id: number, userEdit: any) {
+    return this.http.put<Member>(this.baseUrl + 'Users/edit/' + id, userEdit);
   }
 }

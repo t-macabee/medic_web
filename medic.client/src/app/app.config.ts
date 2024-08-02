@@ -9,6 +9,8 @@ import {ToastrModule} from "ngx-toastr";
 import {errorInterceptor} from "./interceptors/error.interceptor";
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {jwtInterceptor} from "./interceptors/jwt.interceptor";
+import {NgxSpinnerModule} from "ngx-spinner";
+import {loadingInterceptor} from "./interceptors/loading.interceptor";
 
 
 export const appConfig: ApplicationConfig = {
@@ -18,7 +20,7 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(),
     provideHttpClient(
       withFetch(),
-      withInterceptors([errorInterceptor, jwtInterceptor])
+      withInterceptors([errorInterceptor, jwtInterceptor, loadingInterceptor])
     ),
     provideAnimations(),
     importProvidersFrom(
@@ -28,6 +30,9 @@ export const appConfig: ApplicationConfig = {
         positionClass: 'toast-bottom-right',
         preventDuplicates: true,
       }),
+      NgxSpinnerModule.forRoot({
+        type: 'square-jelly-box'
+      })
     ), provideAnimationsAsync()
   ]
 };
