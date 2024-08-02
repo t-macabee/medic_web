@@ -7,6 +7,7 @@ import {provideAnimations} from "@angular/platform-browser/animations";
 import {BsDropdownModule} from "ngx-bootstrap/dropdown";
 import {ToastrModule} from "ngx-toastr";
 import {errorInterceptor} from "./interceptors/error.interceptor";
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 
 export const appConfig: ApplicationConfig = {
@@ -26,6 +27,6 @@ export const appConfig: ApplicationConfig = {
         positionClass: 'toast-bottom-right',
         preventDuplicates: true,
       }),
-    )
+    ), provideAnimationsAsync()
   ]
 };

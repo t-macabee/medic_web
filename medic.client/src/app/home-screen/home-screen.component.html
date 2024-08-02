@@ -1,5 +1,22 @@
-<div class="row">
-  <div class="col-2" *ngFor="let member of members">
-    <app-member-card [member]="member"></app-member-card>
-  </div>
+<div class="cards-wrapper">
+  <ng-container *ngFor="let member of members">
+    <div class="card-container">
+      <div class="info-container">
+        <div class="content-wrapper" (click)="details(member)">
+          <div class="label-group">
+            <div class="label">ID:</div>
+            <div class="label">Name:</div>
+            <div class="label">Username:</div>
+            <div class="label">Last Login:</div>
+          </div>
+          <div class="value-group">
+            <div class="value"><strong>{{member.id}}</strong></div>
+            <div class="value"><strong>{{member.name}}</strong></div>
+            <div class="value"><strong>{{member.username}}</strong></div>
+            <div class="value"><strong>{{member.lastLogin}}</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
 </div>

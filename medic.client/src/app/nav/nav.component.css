@@ -38,10 +38,25 @@
 }
 
 .dropdown-toggle, .dropdown-item {
-  color: darkgray;
   cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  color: darkgray;
+  font-weight: bold;
 }
 
-.dropdown-toggle:hover, .dropdown-item:hover {
-  color: white;
+.dropdown-item:hover {
+  background-color: #343a40;
 }
+
+.btn {
+  background-color: #212529;
+  border: 1px solid darkgray;
+  color: darkgray;
+  transition: background-color 0.3s ease-in-out;
+  font-weight: bold;
+}
+
+.btn:hover {
+  background-color: #343a40;
+}
+

@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+
+.mat-mdc-dialog-surface {
+  border: 3px solid #ac653d;
+}
+
+.mat-mdc-dialog-container {
+  max-height: 90vh !important;
+  max-width: 90vw !important;
+}
+
+.mat-mdc-dialog-inner-container {
+  height: 100%;
+  width: 100%;
+}
