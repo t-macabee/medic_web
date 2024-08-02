@@ -1,22 +1,31 @@
-import { Component } from '@angular/core';
-import {MatDialogActions, MatDialogContent, MatDialogTitle} from "@angular/material/dialog";
-import {MatButton} from "@angular/material/button";
+import {Component, Inject} from '@angular/core';
+import {FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {Member} from "../../models/member";
 
 @Component({
   selector: 'app-create-member',
   standalone: true,
   imports: [
-    MatDialogTitle,
-    MatDialogContent,
-    MatDialogActions,
-    MatButton
+    ReactiveFormsModule
   ],
   templateUrl: './create-member.component.html',
   styleUrl: './create-member.component.css'
 })
 export class CreateMemberComponent {
+  registerForm: FormGroup
+  maxDate: Date = new Date();
 
-  onClose() {
+  constructor(
+    public dialogRef: MatDialogRef<CreateMemberComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { member: Member }
+  ) {}
+
+  close() {
+    this.dialogRef.close();
+  }
+
+  create() {
 
   }
 }

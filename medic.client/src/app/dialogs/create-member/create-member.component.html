@@ -1,7 +1,26 @@
-<h1 mat-dialog-title>Dialog Title</h1>
-<div mat-dialog-content>
-  <p>This is the content of the dialog!</p>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onClose()">Close</button>
-</div>
+<!--
+<form [formGroup]='registerForm' (ngSubmit)="create()" autocomplete="off">
+  <h2 class="text text-center">Sign up</h2>
+  <hr>
+
+  <br>
+  <app-text-input [formControl]='registerForm.controls["username"]' [label]='"Username"'></app-text-input>
+  <br>
+  <app-text-input [formControl]='registerForm.controls["knownAs"]' [label]='"Known as"'></app-text-input>
+  <br>
+  <app-date-input [formControl]='registerForm.controls["dateOfBirth"]' [label]='"Date of birth"' [maxDate]="maxDate"></app-date-input>
+  <br>
+  <app-text-input [formControl]='registerForm.controls["country"]' [label]='"Country"'></app-text-input>
+  <br>
+  <app-text-input [formControl]='registerForm.controls["password"]' [label]='"Password"' [type]='"password"'></app-text-input>
+  <br>
+  <app-text-input [formControl]='registerForm.controls["confirmPassword"]' [label]='"Confirm password"' [type]='"password"'></app-text-input>
+  <br>
+
+  <div class="form-group text-center mb-5">
+    <button [disabled]="!registerForm.valid" class="btn me-2" type="submit">Register</button>
+
+  </div>
+</form>
+-->
+<button class="btn mr-2" (click)="close()" type="button">Cancel</button>

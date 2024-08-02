@@ -1,8 +1,8 @@
 <div class="cards-wrapper">
   <ng-container *ngFor="let member of members">
     <div class="card-container">
-      <div class="info-container">
-        <div class="content-wrapper" (click)="details(member)">
+      <div class="info-container" (click)="memberDetails(member)">
+        <div class="content-wrapper" >
           <div class="label-group">
             <div class="label">ID:</div>
             <div class="label">Name:</div>

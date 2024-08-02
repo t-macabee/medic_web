@@ -31,13 +31,14 @@ export class HomeScreenComponent implements OnInit{
     })
   }
 
-  details(member: Member) {
+  memberDetails(member: Member) {
     const dialog = this.dialog.open(MemberDetailsComponent, {
       data: {member: member},
       maxHeight: '90vh',
       maxWidth: '90vw',
-      height: '450px',
-      width: '800px'
+      height: '400px',
+      width: '900px',
+      disableClose: true
     });
   }
 }

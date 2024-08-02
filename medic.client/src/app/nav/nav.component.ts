@@ -38,7 +38,8 @@ export class NavComponent {
     const dialog = this.dialog.open(CreateMemberComponent, {
       height: '600px',
       width: '500px',
-      data : {}
+      data : {},
+      disableClose: true
     })
   }
 }

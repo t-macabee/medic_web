@@ -8,6 +8,7 @@ import {BsDropdownModule} from "ngx-bootstrap/dropdown";
 import {ToastrModule} from "ngx-toastr";
 import {errorInterceptor} from "./interceptors/error.interceptor";
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import {jwtInterceptor} from "./interceptors/jwt.interceptor";
 
 
 export const appConfig: ApplicationConfig = {
@@ -17,7 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(),
     provideHttpClient(
       withFetch(),
-      withInterceptors([errorInterceptor])
+      withInterceptors([errorInterceptor, jwtInterceptor])
     ),
     provideAnimations(),
     importProvidersFrom(
