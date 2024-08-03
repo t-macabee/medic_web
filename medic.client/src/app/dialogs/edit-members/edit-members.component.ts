@@ -96,8 +96,8 @@ export class EditMembersComponent implements OnInit {
       const dialogRef = this.dialog.open(PhotoEditorComponent, {
         maxHeight: '90vh',
         maxWidth: '90vw',
-        height: '300px',
-        width: '650px',
+        height: '650px',
+        width: '850px',
         data: { member: this.member }
       });
 
