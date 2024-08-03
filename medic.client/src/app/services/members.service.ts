@@ -21,4 +21,5 @@ export class MembersService {
   editMember(id: number, userEdit: any) {
     return this.http.put<Member>(this.baseUrl + 'Users/edit/' + id, userEdit);
   }
+
 }

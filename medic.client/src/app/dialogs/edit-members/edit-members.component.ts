@@ -1,9 +1,11 @@
 import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MembersService} from "../../services/members.service";
 import {ToastrService} from "ngx-toastr";
 import {SharedService} from "../../services/shared.service";
+import {PhotoEditorComponent} from "../photo-editor/photo-editor.component";
+import {Member} from "../../models/member";
 
 @Component({
   selector: 'app-edit-members',
@@ -23,23 +25,31 @@ export class EditMembersComponent implements OnInit {
   constructor(
     private memberService: MembersService,
     private sharedService: SharedService,
-    private toastrService: ToastrService,
+    private toastr: ToastrService,
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<EditMembersComponent>,
-    @Inject(MAT_DIALOG_DATA) data: { member: any }
+    private dialog: MatDialog,
+    @Inject(MAT_DIALOG_DATA) data: { member: Member }
   ) {
-    this.member = data.member;
+    this.member = { ...data.member };
+    console.log('EditMembersComponent - Constructor:', this.member.photoUrl);
   }
 
   ngOnInit() {
+    this.formInitialization();
+    console.log('EditMembersComponent - ngOnInit:', this.member.photoUrl);
+  }
+
+  formInitialization() {
     this.editForm = this.fb.group({
-      id: [{ value: this.member.id, disabled: true }],
+      id: [{value: this.member.id, disabled: true}],
       name: [this.member.name, Validators.required],
       username: [this.member.username, Validators.required],
-      dateOfBirth: [{ value: this.member.dateOfBirth, disabled: true }],
-      orders: [{ value: this.member.orders, disabled: true }],
-      lastLogin: [{ value: this.member.lastLogin, disabled: true }],
-      status: [{ value: this.member.status, disabled: false }]
+      dateOfBirth: [{value: this.member.dateOfBirth, disabled: true}],
+      orders: [{value: this.member.orders, disabled: true}],
+      lastLogin: [{value: this.member.lastLogin, disabled: true}],
+      status: [{value: this.member.status, disabled: false}],
+      photoUrl: [this.member.photoUrl]
     });
 
     this.initialValues = this.editForm.value;
@@ -47,23 +57,23 @@ export class EditMembersComponent implements OnInit {
 
   save() {
     if (this.editForm.invalid) {
-      this.toastrService.error('Please fill in all required fields.');
+      this.toastr.error('Please fill in all required fields.');
       return;
     }
 
     const currentValues = this.editForm.getRawValue();
     if (this.areValuesUnchanged(currentValues, this.initialValues)) {
-      this.toastrService.info('No changes were made.');
+      this.toastr.info('No changes were made.');
       return;
     }
 
     this.memberService.editMember(this.member.id, currentValues).subscribe({
       next: (updatedMember) => {
         this.sharedService.updateMember(updatedMember);
-        this.toastrService.success('Member updated successfully!');
+        this.toastr.success('Member updated successfully!');
       },
       error: (err) => {
-        this.toastrService.error('Failed to update member!');
+        this.toastr.error('Failed to update member!');
       }
     });
   }
@@ -71,7 +81,7 @@ export class EditMembersComponent implements OnInit {
   toggle() {
     const currentStatus = this.editForm.get('status')?.value;
     const newStatus = currentStatus === 'Active' ? 'Blocked' : 'Active';
-    this.editForm.patchValue({ status: newStatus });
+    this.editForm.patchValue({status: newStatus});
   }
 
   close() {
@@ -81,5 +91,21 @@ export class EditMembersComponent implements OnInit {
   private areValuesUnchanged(currentValues: any, initialValues: any): boolean {
     return JSON.stringify(currentValues) === JSON.stringify(initialValues);
   }
-}
 
+  photoEditor() {
+      const dialogRef = this.dialog.open(PhotoEditorComponent, {
+        maxHeight: '90vh',
+        maxWidth: '90vw',
+        height: '300px',
+        width: '650px',
+        data: { member: this.member }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.member = result;
+          this.sharedService.updateMember(this.member);
+        }
+      });
+    }
+}

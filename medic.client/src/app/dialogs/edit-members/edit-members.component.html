@@ -1,8 +1,7 @@
 <div class="dialog-container">
   <div class="left-section">
-    <img [src]="member.imageUrl" [alt]="member.name" class="member-image">
+    <img [src]="member.photoUrl" alt="Member Image" (click)="photoEditor()">
   </div>
-
   <div class="right-section">
     <form [formGroup]="editForm" (ngSubmit)="save()">
       <div class="details-container">

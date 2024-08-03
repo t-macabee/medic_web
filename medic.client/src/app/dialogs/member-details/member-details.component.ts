@@ -21,10 +21,10 @@ export class MemberDetailsComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<MemberDetailsComponent>,
     private sharedService: SharedService,
-    @Inject(MAT_DIALOG_DATA) data: { member: any },
+    @Inject(MAT_DIALOG_DATA) data: { member: Member },
     private dialog: MatDialog
   ) {
-    this.member = data.member;
+    this.member = { ...data.member };
   }
 
   ngOnInit(): void {
@@ -36,16 +36,18 @@ export class MemberDetailsComponent implements OnInit {
   }
 
   editDetail() {
+    console.log('MemberDetails - Before opening EditMembersComponent:', this.member.photoUrl);
     const dialogRef = this.dialog.open(EditMembersComponent, {
-      data: { member: this.member },
+      data: { member: { ...this.member } },
       maxHeight: '90vh',
       maxWidth: '90vw',
       height: '450px',
-      width: '800px',
+      width: '850px',
       disableClose: true
-    })
+    });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        console.log('MemberDetails - After EditMembersComponent closed:', result.photoUrl);
         this.sharedService.updateMember(result);
         this.member = result;
       }

@@ -1,13 +1,15 @@
 import {Roles} from "./roles";
+import {Photo} from "./photo";
 
 export interface Member {
-  id: number,
-  name: string,
-  username: string,
-  dateOfBirth: Date,
-  lastLogin: Date,
-  orders: number,
-  status: string,
-  imageUrl: string,
-  role: Roles
+  id: number;
+  username: string;
+  photoUrl: string;
+  name: string;
+  dateOfBirth: Date;
+  lastLogin: Date;
+  orders: number;
+  status: string;
+  role: Roles;
+  photos: Photo[];
 }

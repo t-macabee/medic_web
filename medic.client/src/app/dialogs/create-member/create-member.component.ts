@@ -38,7 +38,7 @@ export class CreateMemberComponent implements OnInit {
       confirmPassword: ['', Validators.required],
       name: ['', Validators.required],
       orders: [{ value: '', disabled: true }],
-      imageUrl: [''],
+      photoUrl: [''],
       dateOfBirth: ['', [Validators.required, this.ageValidator()]]
     }, { validators: this.passwordMatchValidator });
   }
@@ -59,9 +59,14 @@ export class CreateMemberComponent implements OnInit {
       return;
     }
 
-    const formData = this.createForm.getRawValue();
+    const defaultImage = 'assets/user.png';
 
-    this.accountService.register(formData).subscribe({
+    const user = {
+      ...this.createForm.value,
+      photoUrl: defaultImage
+    };
+
+    this.accountService.register(user).subscribe({
       next: (user: Member) => {
         this.toastr.success('User created successfully!');
         this.sharedService.addMember(user);

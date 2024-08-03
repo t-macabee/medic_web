@@ -29,8 +29,4 @@ export class SharedService {
     const currentMembers = this.membersSource.getValue();
     this.membersSource.next([...currentMembers, member]);
   }
-
-  getCurrentMembers(): Member[] {
-    return this.membersSource.getValue();
-  }
 }
