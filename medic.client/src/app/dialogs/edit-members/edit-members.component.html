@@ -1,7 +1,7 @@
 <div class="dialog-container">
   <div class="left-section">
     <p class="info-text">Click on image to open photo editor</p>
-    <img [src]="member.photoUrl" alt="Member Image" (click)="photoEditor()">
+    <img [src]="editForm.get('photoUrl')?.value" alt="Member Image" (click)="photoEditor()">
   </div>
   <div class="right-section">
     <form [formGroup]="editForm" (ngSubmit)="save()">
@@ -15,8 +15,8 @@
           </div>
           <div class="value-group">
             <div class="value"><strong>{{ member.id }}</strong></div>
-            <div class="value"><strong>{{ member.dateOfBirth }}</strong></div>
-            <div class="value"><strong>{{ member.lastLogin }}</strong></div>
+            <div class="value"><strong>{{ member.dateOfBirth | date: 'yyyy-MM-dd' }}</strong></div>
+            <div class="value"><strong>{{ member.lastLogin | date: 'yyyy-MM-dd' }}</strong></div>
             <div class="value"><strong>{{ member.orders }}</strong></div>
           </div>
         </div>

@@ -6,13 +6,15 @@ import {ToastrService} from "ngx-toastr";
 import {SharedService} from "../../services/shared.service";
 import {PhotoEditorComponent} from "../photo-editor/photo-editor.component";
 import {Member} from "../../models/member";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-edit-members',
   standalone: true,
-  imports: [
-    ReactiveFormsModule
-  ],
+    imports: [
+        ReactiveFormsModule,
+        DatePipe
+    ],
   templateUrl: './edit-members.component.html',
   styleUrl: './edit-members.component.css',
   encapsulation: ViewEncapsulation.Emulated
@@ -94,13 +96,13 @@ export class EditMembersComponent implements OnInit {
   }
 
   photoEditor() {
-      const dialogRef = this.dialog.open(PhotoEditorComponent, {
-        maxHeight: '90vh',
-        maxWidth: '90vw',
-        height: '650px',
-        width: '850px',
-        data: { member: this.member }
-      });
+    const dialogRef = this.dialog.open(PhotoEditorComponent, {
+      maxHeight: '90vh',
+      maxWidth: '90vw',
+      height: '650px',
+      width: '850px',
+      data: { member: this.member }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
