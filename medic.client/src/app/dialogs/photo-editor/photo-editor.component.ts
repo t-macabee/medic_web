@@ -7,7 +7,8 @@ import {AccountService} from "../../services/account.service";
 import {take} from "rxjs";
 import {DecimalPipe, NgClass, NgForOf, NgIf, NgStyle} from "@angular/common";
 import {Photo} from "../../models/photo";
-
+import {PhotoService} from "../../services/photo.service";
+import {SharedService} from "../../services/shared.service";
 
 @Component({
   selector: 'app-photo-editor',
@@ -32,6 +33,8 @@ export class PhotoEditorComponent implements OnInit{
 
   constructor(
     private accountService: AccountService,
+    private photoService: PhotoService,
+    private sharedService: SharedService,
     public dialogRef: MatDialogRef<PhotoEditorComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { member: any }
   ) {
@@ -69,19 +72,31 @@ export class PhotoEditorComponent implements OnInit{
       if (response) {
         const photo = JSON.parse(response);
         this.member.photos.push(photo);
+        this.sharedService.updateMember(this.member);
       }
     }
   }
 
-  close() {
-    this.dialogRef.close();
-  }
-
-  deletePhoto(id: number) {
-
-  }
-
   setMainPhoto(photo: Photo) {
+    this.photoService.setMainPhoto(this.member.id, photo.id).subscribe({
+      next: () => {
+        if (this.member) {
+          this.member.photoUrl = photo.url;
+          this.member.photos.forEach(p => {
+            p.isMain = p.id === photo.id;
+          });
+          this.sharedService.updateMember(this.member);
+        }
+      },
+      error: (err) => {
+        console.error('Error setting main photo:', err);
+      }
+    });
+  }
 
+  deletePhoto(photoId: number) {
+    this.photoService.deletePhoto(this.member.id, photoId).subscribe(() => {
+      this.member.photos = this.member.photos.filter(x => x.id !== photoId);
+    })
   }
 }

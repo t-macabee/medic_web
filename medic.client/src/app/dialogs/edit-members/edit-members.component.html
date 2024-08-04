@@ -1,5 +1,6 @@
 <div class="dialog-container">
   <div class="left-section">
+    <p class="info-text">Click on image to open photo editor</p>
     <img [src]="member.photoUrl" alt="Member Image" (click)="photoEditor()">
   </div>
   <div class="right-section">
@@ -23,11 +24,13 @@
           <div class="label-group">
             <div class="label">Name:</div>
             <div class="label">Username:</div>
+            <div class="label">Role:</div>
             <div class="label">Status:</div>
           </div>
           <div class="value-group">
             <input formControlName="name" class="value">
             <input formControlName="username" class="value">
+            <div class="value"><strong>{{ editForm.get('role')?.value }}</strong></div>
             <div class="value"><strong>{{ editForm.get('status')?.value }}</strong></div>
           </div>
         </div>

@@ -43,7 +43,7 @@ export class NavComponent {
     this.isDialogOpen = true;
     const dialog = this.dialog.open(CreateMemberComponent, {
       height: '600px',
-      width: '600px',
+      width: '500px',
       data: {},
       disableClose: true
     });

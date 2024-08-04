@@ -31,7 +31,7 @@ export class EditMembersComponent implements OnInit {
     private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) data: { member: Member }
   ) {
-    this.member = { ...data.member };
+    this.member = data.member;
     console.log('EditMembersComponent - Constructor:', this.member.photoUrl);
   }
 
@@ -49,6 +49,7 @@ export class EditMembersComponent implements OnInit {
       orders: [{value: this.member.orders, disabled: true}],
       lastLogin: [{value: this.member.lastLogin, disabled: true}],
       status: [{value: this.member.status, disabled: false}],
+      role: [{value: this.member.role.name, disabled: false}],
       photoUrl: [this.member.photoUrl]
     });
 
@@ -101,11 +102,12 @@ export class EditMembersComponent implements OnInit {
         data: { member: this.member }
       });
 
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.member = result;
-          this.sharedService.updateMember(this.member);
-        }
-      });
-    }
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.member = result;
+        this.sharedService.updateMember(this.member);
+      }
+    });
+
+  }
 }

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidatorFn, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material/dialog";
 import {AccountService} from "../../services/account.service";
 import {ToastrService} from "ngx-toastr";
@@ -23,7 +23,7 @@ export class CreateMemberComponent implements OnInit {
     public sharedService: SharedService,
     private toastr: ToastrService,
     private fb: FormBuilder,
-    public dialogRef: MatDialogRef<CreateMemberComponent>,
+    public dialogRef: MatDialogRef<CreateMemberComponent>
   ) {}
 
   ngOnInit(): void {
@@ -34,7 +34,7 @@ export class CreateMemberComponent implements OnInit {
   initializeForm() {
     this.createForm = this.fb.group({
       username: ['', Validators.required],
-      password: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
       name: ['', Validators.required],
       orders: [{ value: '', disabled: true }],
@@ -56,8 +56,20 @@ export class CreateMemberComponent implements OnInit {
 
   save() {
     if (this.createForm.invalid) {
+      const passwordControl = this.createForm.get('password');
+      const dateOfBirthControl = this.createForm.get('dateOfBirth');
+
+      if (passwordControl?.hasError('minlength')) {
+        this.toastr.error('Password must be at least 6 characters long.');
+      }
+
+      if (dateOfBirthControl?.hasError('ageError')) {
+        this.toastr.error('You must be at least 18 years old.');
+      }
+
       return;
     }
+
 
     const defaultImage = 'assets/user.png';
 
@@ -82,30 +94,28 @@ export class CreateMemberComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  private ageValidator(): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } | null => {
-      if (control.value) {
-        const dob = new Date(control.value);
-        const age = this.calculateAge(dob);
-        if (age < 18) {
-          return { 'underage': true };
-        }
-      }
-      return null;
+  ageValidator() {
+    return (control: AbstractControl) => {
+      const dateOfBirth = new Date(control.value);
+      const age = this.calculateAge(dateOfBirth);
+      return age < 18 ? { ageError: true } : null;
     };
   }
 
-  private calculateAge(dateOfBirth: Date): number {
+  calculateAge(dateOfBirth: Date): number {
     const today = new Date();
     let age = today.getFullYear() - dateOfBirth.getFullYear();
-    const month = today.getMonth() - dateOfBirth.getMonth();
-    if (month < 0 || (month === 0 && today.getDate() < dateOfBirth.getDate())) {
+    const monthDifference = today.getMonth() - dateOfBirth.getMonth();
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < dateOfBirth.getDate())) {
       age--;
     }
     return age;
   }
 
-  private passwordMatchValidator(g: FormGroup) {
-    return g.get('password')?.value === g.get('confirmPassword')?.value ? null : { 'mismatch': true };
+  passwordMatchValidator(formGroup: FormGroup) {
+    const password = formGroup.get('password');
+    const confirmPassword = formGroup.get('confirmPassword');
+    return password && confirmPassword && password.value === confirmPassword.value
+      ? null : { mismatch: true };
   }
 }

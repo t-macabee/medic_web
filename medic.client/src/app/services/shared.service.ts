@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Member} from "../models/member";
 import {BehaviorSubject} from "rxjs";
+import {MembersService} from "./members.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +13,20 @@ export class SharedService {
   private membersSource = new BehaviorSubject<Member[]>([]);
   currentMembers$ = this.membersSource.asObservable();
 
-  constructor() { }
+  constructor(private membersService: MembersService) {}
 
   updateMember(member: Member) {
-    this.memberSource.next(member);
-    const currentMembers = this.membersSource.getValue();
-    const updatedMembers = currentMembers.map(m => m.id === member.id ? member : m);
-    this.membersSource.next(updatedMembers);
+    this.membersService.getMember(member.id).subscribe(
+      updatedMember => {
+        this.memberSource.next(updatedMember);
+        const currentMembers = this.membersSource.getValue();
+        const updatedMembers = currentMembers.map(m => m.id === updatedMember.id ? updatedMember : m);
+        this.membersSource.next(updatedMembers);
+      },
+      error => {
+        console.error('Error updating member:', error);
+      }
+    );
   }
 
   updateMembers(members: Member[]) {

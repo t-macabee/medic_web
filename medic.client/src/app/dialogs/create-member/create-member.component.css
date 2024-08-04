@@ -26,7 +26,8 @@
 .button-group {
   display: flex;
   justify-content: flex-end;
-  margin-top: 40px;
+  margin-top: 80px;
+
 }
 
 .btn {
